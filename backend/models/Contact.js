@@ -12,14 +12,14 @@ const contactSchema = new mongoose.Schema(
       required: true,
     },
 
-    subject: {
+    message: {
       type: String,
       required: true,
     },
 
-    message: {
-      type: String,
-      required: true,
+    read: {
+      type: Boolean,
+      default: false,
     },
   },
   {

@@ -8,6 +8,8 @@ const portfolioRoutes = require("./routes/portfolioRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const experienceRoutes = require("./routes/experienceRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const skillRoutes = require("./routes/skillRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 const app = express();
 
 connectDB();
@@ -19,7 +21,8 @@ app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/experience", experienceRoutes);
 app.use("/api/contact", contactRoutes);
-
+app.use("/api/skills", skillRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.get("/", (req, res) => {
   res.send("Portfolio Backend is Running...");

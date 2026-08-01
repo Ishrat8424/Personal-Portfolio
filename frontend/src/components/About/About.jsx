@@ -1,20 +1,39 @@
+import { useEffect, useState } from "react";
+import { getPortfolio } from "../../services/portfolioService";
+
 function About() {
+  const [portfolio, setPortfolio] = useState(null);
+
+  useEffect(() => {
+    const fetchPortfolio = async () => {
+      try {
+        const data = await getPortfolio();
+        setPortfolio(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchPortfolio();
+  }, []);
+
+  if (!portfolio) return null;
+
   return (
-    <section id="about" className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-6">
+    <section
+      id="about"
+      className="py-20 bg-white"
+    >
+      <div className="max-w-5xl mx-auto px-6">
+
         <h2 className="text-4xl font-bold text-center mb-10">
           About Me
         </h2>
 
-        <div className="bg-gray-100 rounded-xl p-8 shadow-md">
-          <p className="text-lg text-gray-700 leading-8">
-            I am Ishrat Jahan Mohammed Afzal Khazi, a Computer Science and
-            Engineering student passionate about Full Stack MERN Development,
-            Data Analytics, Artificial Intelligence, and building modern web
-            applications. I enjoy solving real-world problems through
-            technology and continuously learning new skills.
-          </p>
-        </div>
+        <p className="text-gray-700 text-lg leading-8 text-center">
+          {portfolio.about}
+        </p>
+
       </div>
     </section>
   );

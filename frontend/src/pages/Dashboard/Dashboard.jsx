@@ -3,6 +3,7 @@ import {
   FaHome,
   FaUser,
   FaProjectDiagram,
+  FaCode,
   FaBriefcase,
   FaEnvelope,
   FaSignOutAlt,
@@ -49,7 +50,13 @@ function Dashboard() {
             <FaProjectDiagram />
             Projects
           </Link>
-
+<Link
+  to="/dashboard/skills"
+  className="flex items-center gap-3 hover:text-cyan-400"
+>
+  <FaCode />
+  Skills
+</Link>
           <Link
             to="/dashboard/experience"
             className="flex items-center gap-3 hover:text-cyan-400"

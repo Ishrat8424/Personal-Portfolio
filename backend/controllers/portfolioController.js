@@ -32,14 +32,14 @@ const getPortfolio = async (req, res) => {
 // Update Portfolio
 const updatePortfolio = async (req, res) => {
   try {
-    const portfolio = await Portfolio.findOneAndUpdate(
-      {},
-      req.body,
-      {
-        new: true,
-        upsert: true,
-      }
-    );
+   const portfolio = await Portfolio.findOneAndUpdate(
+  {},
+  req.body,
+  {
+    new: true,
+    upsert: true,
+  }
+);
 
     res.status(200).json({
       message: "Portfolio Updated Successfully",

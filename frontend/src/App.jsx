@@ -10,6 +10,7 @@ import Projects from "./pages/Dashboard/Projects";
 import Experience from "./pages/Dashboard/Experience";
 import Contacts from "./pages/Dashboard/Contacts";
 import DashboardHome from "./pages/Dashboard/Home";
+import Skills from "./pages/Dashboard/Skills";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
 
           <Route path="portfolio" element={<Portfolio />} />
           <Route path="projects" element={<Projects />} />
+          <Route path="skills" element={<Skills />} />
           <Route path="experience" element={<Experience />} />
           <Route path="contacts" element={<Contacts />} />
         </Route>

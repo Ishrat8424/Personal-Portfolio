@@ -5,20 +5,22 @@ import {
   deleteProject,
   updateProject,
 } from "../../services/projectService";
+import { uploadImage } from "../../services/uploadService";
 
 function Projects() {
   const [project, setProject] = useState({
-    title: "",
-    description: "",
-    technologies: "",
-    github: "",
-    liveDemo: "",
-    image: "",
-  });
+  title: "",
+  description: "",
+  technologies: "",
+  github: "",
+  liveDemo: "",
+  image: "",
+});
 
   const [projects, setProjects] = useState([]);
 
   const [editingId, setEditingId] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   const fetchProjects = async () => {
     try {
@@ -58,6 +60,29 @@ function Projects() {
       image: item.image,
     });
   };
+
+const handleImageUpload = async (e) => {
+  const file = e.target.files[0];
+
+  if (!file) return;
+
+  try {
+    setUploading(true);
+
+    const data = await uploadImage(file);
+
+    setProject((prev) => ({
+      ...prev,
+      image: data.imageUrl,
+    }));
+
+    alert("Project Image Uploaded Successfully!");
+  } catch (error) {
+    alert(error.response?.data?.message || "Image Upload Failed");
+  } finally {
+    setUploading(false);
+  }
+};
 
   useEffect(() => {
     fetchProjects();
@@ -161,14 +186,32 @@ function Projects() {
           className="w-full border p-3 rounded"
         />
 
-        <input
-          type="text"
-          name="image"
-          placeholder="Image URL"
-          value={project.image}
-          onChange={handleChange}
-          className="w-full border p-3 rounded"
-        />
+        <div>
+  <label className="block mb-2 font-semibold">
+    Project Image
+  </label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleImageUpload}
+    className="w-full border p-3 rounded"
+  />
+
+  {uploading && (
+    <p className="text-blue-600 mt-2">
+      Uploading Image...
+    </p>
+  )}
+
+  {project.image && (
+    <img
+      src={project.image}
+      alt="Project Preview"
+      className="w-56 mt-4 rounded-lg border shadow"
+    />
+  )}
+</div>
 
 <button
   type="submit"
@@ -185,6 +228,13 @@ function Projects() {
         {projects.map((item) => (
           <div key={item._id} className="border rounded-lg p-4 shadow">
             <h3 className="text-xl font-bold">{item.title}</h3>
+            {item.image && (
+  <img
+    src={item.image}
+    alt={item.title}
+    className="w-full max-w-md rounded-lg mt-3 mb-3 border shadow"
+  />
+)}
 
             <p>{item.description}</p>
 

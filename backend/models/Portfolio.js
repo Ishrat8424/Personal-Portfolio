@@ -17,6 +17,11 @@ const portfolioSchema = new mongoose.Schema(
       required: true,
     },
 
+    heroDescription: {
+      type: String,
+      default: "",
+    },
+    
     email: {
       type: String,
       required: true,
@@ -54,7 +59,7 @@ const portfolioSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = mongoose.model("Portfolio", portfolioSchema);
