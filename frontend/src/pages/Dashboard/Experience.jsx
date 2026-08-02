@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { toast } from "react-toastify";
 import {
   addExperience,
   getExperiences,
@@ -24,7 +24,7 @@ function Experience() {
       const data = await getExperiences();
       setExperiences(data);
     } catch (error) {
-      console.log(error);
+      toast.error(error.response?.data?.message || "Failed to fetch experiences");
     }
   };
 const handleDelete = async (id) => {
@@ -37,11 +37,11 @@ const handleDelete = async (id) => {
   try {
     await deleteExperience(id);
 
-    alert("Experience Deleted Successfully!");
+    toast.success("Experience Deleted Successfully!");
 
     fetchExperiences();
   } catch (error) {
-    alert(error.response?.data?.message || "Delete Failed");
+    toast.error(error.response?.data?.message || "Delete Failed");
   }
 };
 
@@ -78,13 +78,13 @@ const handleSubmit = async (e) => {
     if (editingId) {
       await updateExperience(editingId, experience);
 
-      alert("Experience Updated Successfully!");
+      toast.success("Experience Updated Successfully!");
 
       setEditingId(null);
     } else {
       await addExperience(experience);
 
-      alert("Experience Added Successfully!");
+      toast.success("Experience Added Successfully!");
     }
 
     fetchExperiences();
@@ -97,7 +97,7 @@ const handleSubmit = async (e) => {
       description: "",
     });
   } catch (error) {
-    alert(error.response?.data?.message || "Failed");
+    toast.error(error.response?.data?.message || "Failed");
   }
 };
 

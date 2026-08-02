@@ -19,3 +19,9 @@ export const deleteContact = async (id) => {
   const response = await axios.delete(`${API}/${id}`);
   return response.data;
 };
+
+// Dashboard - Mark message as read
+export const markAsRead = async (id) => {
+  const response = await axios.patch(`${API}/${id}/read`);
+  return response.data;
+};

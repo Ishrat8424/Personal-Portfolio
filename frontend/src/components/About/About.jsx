@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPortfolio } from "../../services/portfolioService";
 
+
 function About() {
   const [portfolio, setPortfolio] = useState(null);
 

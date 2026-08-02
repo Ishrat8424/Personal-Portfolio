@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import Loader from "./components/Loader";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -13,6 +16,20 @@ import DashboardHome from "./pages/Dashboard/Home";
 import Skills from "./pages/Dashboard/Skills";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+ useEffect(() => {
+  const timer = setTimeout(() => {
+    setLoading(false);
+  }, 7000);
+
+  return () => clearTimeout(timer);
+}, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -29,11 +46,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-         <Route
-  index
-  element={<DashboardHome />}
-/>
-
+          <Route index element={<DashboardHome />} />
           <Route path="portfolio" element={<Portfolio />} />
           <Route path="projects" element={<Projects />} />
           <Route path="skills" element={<Skills />} />

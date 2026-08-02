@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
 import Select from "react-select";
 import { skillOptions } from "../../data/skillOptions";
+import { toast } from "react-toastify";
 
 import {
   addSkill,
@@ -10,14 +12,15 @@ import {
 } from "../../services/skillService";
 
 function Skills() {
- const [skill, setSkill] = useState({
-  name: "",
-  category: "",
-  percentage: 80,
-});
-  
+  const [skill, setSkill] = useState({
+    name: "",
+    category: "",
+    percentage: 80,
+  });
+
   const [skills, setSkills] = useState([]);
   const [editingId, setEditingId] = useState(null);
+const { darkMode } = useOutletContext();
 
   const fetchSkills = async () => {
     try {
@@ -51,7 +54,7 @@ function Skills() {
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this skill?"
+      "Are you sure you want to delete this skill?",
     );
 
     if (!confirmDelete) return;
@@ -59,11 +62,11 @@ function Skills() {
     try {
       await deleteSkill(id);
 
-      alert("Skill Deleted Successfully!");
+      toast.success("Skill Deleted Successfully!");
 
       fetchSkills();
     } catch (error) {
-      alert(error.response?.data?.message || "Delete Failed");
+      toast.error(error.response?.data?.message || "Delete Failed");
     }
   };
 
@@ -74,36 +77,33 @@ function Skills() {
       if (editingId) {
         await updateSkill(editingId, skill);
 
-        alert("Skill Updated Successfully!");
+        toast.success("Skill Updated Successfully!");
 
         setEditingId(null);
       } else {
         await addSkill(skill);
 
-        alert("Skill Added Successfully!");
+        toast.success("Skill Added Successfully!");
       }
 
       fetchSkills();
 
       setSkill({
-  name: "",
-  category: "",
-  percentage: 80,
-});
+        name: "",
+        category: "",
+        percentage: 80,
+      });
     } catch (error) {
-      alert(error.response?.data?.message || "Failed");
+      toast.error(error.response?.data?.message || "Failed");
     }
   };
 
   return (
     <div className="max-w-4xl">
-      <h1 className="text-3xl font-bold mb-6">
-        Skills Management
-      </h1>
+      <h1 className="text-3xl font-bold mb-6">Skills Management</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-
-        <Select
+       <Select
   options={skillOptions}
   placeholder="Search and Select Skill..."
   value={skillOptions.find(
@@ -117,37 +117,97 @@ function Skills() {
     })
   }
   isSearchable
+ styles={{
+  control: (base) => ({
+    ...base,
+    backgroundColor: darkMode ? "#1f2937" : "#ffffff",
+    borderColor: darkMode ? "#374151" : "#d1d5db",
+    color: darkMode ? "#ffffff" : "#000000",
+    boxShadow: "none",
+    "&:hover": {
+      borderColor: "#2563eb",
+    },
+  }),
+
+  menu: (base) => ({
+    ...base,
+    backgroundColor: darkMode ? "#1f2937" : "#ffffff",
+  }),
+
+  option: (base, state) => ({
+    ...base,
+    backgroundColor: state.isFocused
+      ? "#2563eb"
+      : darkMode
+      ? "#1f2937"
+      : "#ffffff",
+    color: darkMode ? "#ffffff" : "#000000",
+    cursor: "pointer",
+  }),
+
+  singleValue: (base) => ({
+    ...base,
+    color: darkMode ? "#ffffff" : "#000000",
+  }),
+
+  input: (base) => ({
+    ...base,
+    color: darkMode ? "#ffffff" : "#000000",
+  }),
+
+  placeholder: (base) => ({
+    ...base,
+    color: darkMode ? "#9ca3af" : "#6b7280",
+  }),
+
+  menuList: (base) => ({
+    ...base,
+    maxHeight: 250,
+  }),
+
+  dropdownIndicator: (base) => ({
+    ...base,
+    color: darkMode ? "#ffffff" : "#000000",
+  }),
+
+  indicatorSeparator: (base) => ({
+    ...base,
+    backgroundColor: darkMode ? "#4b5563" : "#d1d5db",
+  }),
+}}
 />
 
-        <input
+       <input
   type="text"
   value={skill.category}
-  className="w-full border p-3 rounded bg-gray-100"
+  className={`w-full border p-3 rounded transition-colors duration-300 ${
+    darkMode
+      ? "bg-gray-800 text-white border-gray-700"
+      : "bg-gray-100 text-black border-gray-300"
+  }`}
   readOnly
 />
 
-<div>
-  <div className="flex justify-between mb-2">
-    <label className="font-medium">
-      Skill Level
-    </label>
+        <div>
+          <div className="flex justify-between mb-2">
+            <label className="font-medium">Skill Level</label>
 
-    <span className="font-semibold text-blue-600">
-      {skill.percentage}%
-    </span>
-  </div>
+            <span className="font-semibold text-blue-600">
+              {skill.percentage}%
+            </span>
+          </div>
 
-  <input
-    type="range"
-    name="percentage"
-    min="0"
-    max="100"
-    step="1"
-    value={skill.percentage}
-    onChange={handleChange}
-    className="w-full accent-blue-600 cursor-pointer"
-  />
-</div>
+          <input
+            type="range"
+            name="percentage"
+            min="0"
+            max="100"
+            step="1"
+            value={skill.percentage}
+            onChange={handleChange}
+            className="w-full accent-blue-600 cursor-pointer"
+          />
+        </div>
 
         <button
           type="submit"
@@ -155,24 +215,16 @@ function Skills() {
         >
           {editingId ? "Update Skill" : "Add Skill"}
         </button>
-
       </form>
 
       <hr className="my-10" />
 
-      <h2 className="text-2xl font-bold mb-4">
-        All Skills
-      </h2>
+      <h2 className="text-2xl font-bold mb-4">All Skills</h2>
 
       <div className="space-y-4">
         {skills.map((item) => (
-          <div
-            key={item._id}
-            className="border rounded-lg p-4 shadow"
-          >
-            <h3 className="text-xl font-bold">
-              {item.name}
-            </h3>
+          <div key={item._id} className="border rounded-lg p-4 shadow">
+            <h3 className="text-xl font-bold">{item.name}</h3>
 
             <p>{item.category}</p>
 

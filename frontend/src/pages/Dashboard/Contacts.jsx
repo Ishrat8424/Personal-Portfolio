@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   getContacts,
   deleteContact,
+  markAsRead,
 } from "../../services/contactService";
 
 function Contacts() {
   const [contacts, setContacts] = useState([]);
+  const { darkMode } = useOutletContext();
 
   const fetchContacts = async () => {
     try {
@@ -22,53 +26,124 @@ function Contacts() {
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
-      "Delete this message?"
+      "Are you sure you want to delete this message?"
     );
 
     if (!confirmDelete) return;
 
     try {
       await deleteContact(id);
-
-      alert("Message Deleted Successfully!");
-
+      toast.success("Message Deleted Successfully!");
       fetchContacts();
     } catch (error) {
-      alert(error.response?.data?.message || "Delete Failed");
+      toast.error(error.response?.data?.message || "Delete Failed");
+    }
+  };
+
+  const handleMarkAsRead = async (id) => {
+    try {
+      await markAsRead(id);
+      fetchContacts();
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed");
     }
   };
 
   return (
-    <div className="max-w-5xl">
-      <h1 className="text-3xl font-bold mb-6">
+    <div
+      className={`max-w-6xl mx-auto transition-colors duration-300 ${
+        darkMode ? "text-white" : "text-black"
+      }`}
+    >
+      <h1 className="text-3xl font-bold mb-8">
         Contact Messages
       </h1>
 
-      <div className="space-y-4">
-        {contacts.map((item) => (
-          <div
-            key={item._id}
-            className="border rounded-lg p-4 shadow"
-          >
-            <h2 className="font-bold text-lg">
-              {item.name}
-            </h2>
-
-            <p>{item.email}</p>
-
-            <p className="my-3">
-              {item.message}
-            </p>
-
-            <button
-              onClick={() => handleDelete(item._id)}
-              className="text-red-600 hover:underline"
+      {contacts.length === 0 ? (
+        <div
+          className={`text-center py-20 ${
+            darkMode ? "text-gray-400" : "text-gray-500"
+          }`}
+        >
+          No Messages Found
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {contacts.map((item) => (
+            <div
+              key={item._id}
+              className={`border rounded-xl p-6 shadow-lg transition-all duration-300 ${
+                darkMode
+                  ? item.isRead
+                    ? "bg-gray-800 border-gray-700"
+                    : "bg-gray-900 border-blue-500"
+                  : item.isRead
+                  ? "bg-white border-gray-300"
+                  : "bg-blue-50 border-blue-500"
+              }`}
             >
-              Delete
-            </button>
-          </div>
-        ))}
-      </div>
+              <div className="flex justify-between items-center mb-3">
+                <div>
+                  <h2
+                    className={`text-xl font-bold ${
+                      darkMode ? "text-white" : "text-black"
+                    }`}
+                  >
+                    {item.name}
+                  </h2>
+
+                  <p
+                    className={`${
+                      darkMode ? "text-gray-300" : "text-gray-600"
+                    }`}
+                  >
+                    {item.email}
+                  </p>
+                </div>
+
+                {!item.isRead && (
+                  <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-full">
+                    New
+                  </span>
+                )}
+              </div>
+
+              <p
+                className={`mb-5 leading-7 ${
+                  darkMode ? "text-gray-200" : "text-gray-700"
+                }`}
+              >
+                {item.message}
+              </p>
+
+              <div className="flex gap-5">
+                {!item.isRead && (
+                  <button
+                    onClick={() => handleMarkAsRead(item._id)}
+                    className="text-green-500 hover:text-green-400 transition"
+                  >
+                    ✓ Mark as Read
+                  </button>
+                )}
+
+                <a
+                  href={`mailto:${item.email}?subject=Reply from Ishrat Jahan&body=Hello ${item.name},`}
+                  className="text-blue-500 hover:text-blue-400 transition"
+                >
+                  📧 Reply
+                </a>
+
+                <button
+                  onClick={() => handleDelete(item._id)}
+                  className="text-red-500 hover:text-red-400 transition"
+                >
+                  🗑 Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

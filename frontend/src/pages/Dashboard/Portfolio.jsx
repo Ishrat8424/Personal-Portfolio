@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { getPortfolio, updatePortfolio } from "../../services/portfolioService";
 import {
   uploadImage,
@@ -40,7 +41,7 @@ function Portfolio() {
       });
     }
   } catch (error) {
-    console.log(error);
+    toast.error(error.response?.data?.message || "Failed to fetch portfolio");
   }
 };
 
@@ -70,9 +71,9 @@ const handleImageUpload = async (e) => {
       profileImage: data.imageUrl,
     }));
 
-    alert("Image Uploaded Successfully!");
+    toast.success("Image Uploaded Successfully!");
   } catch (error) {
-    alert(error.response?.data?.message || "Image Upload Failed");
+    toast.error(error.response?.data?.message || "Image Upload Failed");
   } finally {
     setUploading(false);
   }
@@ -93,10 +94,10 @@ const handleResumeUpload = async (e) => {
       resume: data.resumeUrl,
     }));
 
-    alert("Resume Uploaded Successfully!");
+    toast.success("Resume Uploaded Successfully!");
 
   } catch (error) {
-    alert(error.response?.data?.message || "Resume Upload Failed");
+    toast.error(error.response?.data?.message || "Resume Upload Failed");
   } finally {
     setUploading(false);
   }
@@ -107,9 +108,9 @@ const handleResumeUpload = async (e) => {
     try {
       await updatePortfolio(portfolio);
 
-      alert("Portfolio Updated Successfully!");
+      toast.success("Portfolio Updated Successfully!");
     } catch (error) {
-      alert(error.response?.data?.message || "Update Failed");
+      toast.error(error.response?.data?.message || "Update Failed");
     }
   };
 

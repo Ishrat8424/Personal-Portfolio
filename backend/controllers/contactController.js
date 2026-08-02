@@ -55,15 +55,9 @@ const markAsRead = async (req, res) => {
   try {
     const contact = await Contact.findByIdAndUpdate(
       req.params.id,
-      { read: true },
+      { isRead: true },
       { new: true }
     );
-
-    if (!contact) {
-      return res.status(404).json({
-        message: "Contact not found",
-      });
-    }
 
     res.status(200).json(contact);
   } catch (error) {

@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { useOutletContext } from "react-router-dom";
 import {
   addProject,
   getProjects,
@@ -8,14 +10,15 @@ import {
 import { uploadImage } from "../../services/uploadService";
 
 function Projects() {
+  const { darkMode } = useOutletContext();
   const [project, setProject] = useState({
-  title: "",
-  description: "",
-  technologies: "",
-  github: "",
-  liveDemo: "",
-  image: "",
-});
+    title: "",
+    description: "",
+    technologies: "",
+    github: "",
+    liveDemo: "",
+    image: "",
+  });
 
   const [projects, setProjects] = useState([]);
 
@@ -41,11 +44,11 @@ function Projects() {
     try {
       await deleteProject(id);
 
-      alert("Project Deleted Successfully!");
+      toast.success("Project Deleted Successfully!");
 
       fetchProjects();
     } catch (error) {
-      alert(error.response?.data?.message || "Delete Failed");
+      toast.error(error.response?.data?.message || "Delete Failed");
     }
   };
   const handleEdit = (item) => {
@@ -61,28 +64,28 @@ function Projects() {
     });
   };
 
-const handleImageUpload = async (e) => {
-  const file = e.target.files[0];
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
 
-  if (!file) return;
+    if (!file) return;
 
-  try {
-    setUploading(true);
+    try {
+      setUploading(true);
 
-    const data = await uploadImage(file);
+      const data = await uploadImage(file);
 
-    setProject((prev) => ({
-      ...prev,
-      image: data.imageUrl,
-    }));
+      setProject((prev) => ({
+        ...prev,
+        image: data.imageUrl,
+      }));
 
-    alert("Project Image Uploaded Successfully!");
-  } catch (error) {
-    alert(error.response?.data?.message || "Image Upload Failed");
-  } finally {
-    setUploading(false);
-  }
-};
+      toast.success("Project Image Uploaded Successfully!");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Image Upload Failed");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     fetchProjects();
@@ -109,13 +112,13 @@ const handleImageUpload = async (e) => {
       if (editingId) {
         await updateProject(editingId, projectData);
 
-        alert("Project Updated Successfully!");
+        toast.success("Project Updated Successfully!");
 
         setEditingId(null);
       } else {
         await addProject(projectData);
 
-        alert("Project Added Successfully!");
+        toast.success("Project Added Successfully!");
       }
 
       fetchProjects();
@@ -129,12 +132,12 @@ const handleImageUpload = async (e) => {
         image: "",
       });
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to Add Project");
+      toast.error(error.response?.data?.message || "Failed to Add Project");
     }
   };
 
   return (
-    <div className="max-w-3xl">
+    <div className={`max-w-3xl ${darkMode ? "text-white" : "text-black"}`}>
       <h1 className="text-3xl font-bold mb-6">Add Project</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -144,7 +147,11 @@ const handleImageUpload = async (e) => {
           placeholder="Project Title"
           value={project.title}
           onChange={handleChange}
-          className="w-full border p-3 rounded"
+          className={`w-full border p-3 rounded ${
+            darkMode
+              ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+              : "bg-white border-gray-300 text-black placeholder-gray-500"
+          }`}
           required
         />
 
@@ -153,7 +160,11 @@ const handleImageUpload = async (e) => {
           placeholder="Project Description"
           value={project.description}
           onChange={handleChange}
-          className="w-full border p-3 rounded"
+          className={`w-full border p-3 rounded ${
+            darkMode
+              ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+              : "bg-white border-gray-300 text-black placeholder-gray-500"
+          }`}
           rows="4"
           required
         />
@@ -164,7 +175,11 @@ const handleImageUpload = async (e) => {
           placeholder="React, Node.js, Express, MongoDB"
           value={project.technologies}
           onChange={handleChange}
-          className="w-full border p-3 rounded"
+          className={`w-full border p-3 rounded ${
+            darkMode
+              ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+              : "bg-white border-gray-300 text-black placeholder-gray-500"
+          }`}
           required
         />
 
@@ -174,7 +189,11 @@ const handleImageUpload = async (e) => {
           placeholder="GitHub URL"
           value={project.github}
           onChange={handleChange}
-          className="w-full border p-3 rounded"
+          className={`w-full border p-3 rounded ${
+  darkMode
+    ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+    : "bg-white border-gray-300 text-black placeholder-gray-500"
+}`}
         />
 
         <input
@@ -183,42 +202,46 @@ const handleImageUpload = async (e) => {
           placeholder="Live Demo URL"
           value={project.liveDemo}
           onChange={handleChange}
-          className="w-full border p-3 rounded"
+          className={`w-full border p-3 rounded ${
+            darkMode
+              ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+              : "bg-white border-gray-300 text-black placeholder-gray-500"
+          }`}
         />
 
         <div>
-  <label className="block mb-2 font-semibold">
-    Project Image
-  </label>
+          <label className="block mb-2 font-semibold">Project Image</label>
 
-  <input
-    type="file"
-    accept="image/*"
-    onChange={handleImageUpload}
-    className="w-full border p-3 rounded"
-  />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className={`w-full border p-3 rounded ${
+              darkMode
+                ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                : "bg-white border-gray-300 text-black placeholder-gray-500"
+            }`}
+          />
 
-  {uploading && (
-    <p className="text-blue-600 mt-2">
-      Uploading Image...
-    </p>
-  )}
+          {uploading && (
+            <p className="text-blue-600 mt-2">Uploading Image...</p>
+          )}
 
-  {project.image && (
-    <img
-      src={project.image}
-      alt="Project Preview"
-      className="w-56 mt-4 rounded-lg border shadow"
-    />
-  )}
-</div>
+          {project.image && (
+            <img
+              src={project.image}
+              alt="Project Preview"
+              className="w-56 mt-4 rounded-lg border shadow"
+            />
+          )}
+        </div>
 
-<button
-  type="submit"
-  className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
->
-  {editingId ? "Update Project" : "Add Project"}
-</button>
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700"
+        >
+          {editingId ? "Update Project" : "Add Project"}
+        </button>
       </form>
       <hr className="my-10" />
 
@@ -229,41 +252,41 @@ const handleImageUpload = async (e) => {
           <div key={item._id} className="border rounded-lg p-4 shadow">
             <h3 className="text-xl font-bold">{item.title}</h3>
             {item.image && (
-  <img
-    src={item.image}
-    alt={item.title}
-    className="w-full max-w-md rounded-lg mt-3 mb-3 border shadow"
-  />
-)}
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full max-w-md rounded-lg mt-3 mb-3 border shadow"
+              />
+            )}
 
             <p>{item.description}</p>
 
             <p className="text-blue-600">{item.technologies.join(", ")}</p>
 
             <div className="flex gap-4 mt-3">
-  <a
-    href={item.github}
-    target="_blank"
-    rel="noreferrer"
-    className="text-blue-600 hover:underline"
-  >
-    GitHub
-  </a>
+              <a
+                href={item.github}
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                GitHub
+              </a>
 
-  <button
-    onClick={() => handleEdit(item)}
-    className="text-yellow-600 hover:underline"
-  >
-    Edit
-  </button>
+              <button
+                onClick={() => handleEdit(item)}
+                className="text-yellow-600 hover:underline"
+              >
+                Edit
+              </button>
 
-  <button
-    onClick={() => handleDelete(item._id)}
-    className="text-red-600 hover:underline"
-  >
-    Delete
-  </button>
-</div>
+              <button
+                onClick={() => handleDelete(item._id)}
+                className="text-red-600 hover:underline"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>

@@ -17,7 +17,7 @@ const contactSchema = new mongoose.Schema(
       required: true,
     },
 
-    read: {
+    isRead: {
       type: Boolean,
       default: false,
     },

@@ -12,13 +12,19 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.3.3",
+    "@tsparticles/react": "^4.3.2",
+    "@tsparticles/slim": "^4.3.2",
     "axios": "^1.19.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-icons": "^5.7.0",
     "react-router-dom": "^7.18.2",
     "react-select": "^5.10.2",
-    "tailwindcss": "^4.3.3"
+    "react-toastify": "^11.1.0",
+    "tailwindcss": "^4.3.3",
+    "three": "^0.151.3",
+    "tsparticles": "^4.3.2",
+    "vanta": "^0.5.24"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
