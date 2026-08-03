@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 function Navbar() {
@@ -9,28 +10,63 @@ function Navbar() {
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
         {/* Logo */}
-        <h1 className="text-2xl font-bold text-blue-600 cursor-pointer">
+        <a
+          href="#home"
+          className="text-2xl font-bold text-blue-600 hover:text-blue-700 transition"
+        >
           IJ
-        </h1>
+        </a>
 
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex gap-8 text-gray-700 font-medium">
-          <li><a href="#home" className="hover:text-blue-600">Home</a></li>
-          <li><a href="#about" className="hover:text-blue-600">About</a></li>
-          <li><a href="#skills" className="hover:text-blue-600">Skills</a></li>
-          <li><a href="#projects" className="hover:text-blue-600">Projects</a></li>
-          <li><a href="#experience" className="hover:text-blue-600">Experience</a></li>
-          <li><a href="#contact" className="hover:text-blue-600">Contact</a></li>
+        <ul className="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+          <li>
+            <a href="#home" className="hover:text-blue-600 transition">
+              Home
+            </a>
+          </li>
+
+          <li>
+            <a href="#about" className="hover:text-blue-600 transition">
+              About
+            </a>
+          </li>
+
+          <li>
+            <a href="#skills" className="hover:text-blue-600 transition">
+              Skills
+            </a>
+          </li>
+
+          <li>
+            <a href="#projects" className="hover:text-blue-600 transition">
+              Projects
+            </a>
+          </li>
+
+          <li>
+            <a href="#experience" className="hover:text-blue-600 transition">
+              Experience
+            </a>
+          </li>
+
+          <li>
+            <a href="#contact" className="hover:text-blue-600 transition">
+              Contact
+            </a>
+          </li>
         </ul>
 
         {/* Desktop Login Button */}
-        <button className="hidden md:block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">
+        <Link
+          to="/login"
+          className="hidden md:block px-6 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition duration-300 shadow-md"
+        >
           Login
-        </button>
+        </Link>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden"
+          className="md:hidden text-gray-700"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? (
@@ -39,19 +75,18 @@ function Navbar() {
             <Bars3Icon className="w-8 h-8" />
           )}
         </button>
-
       </div>
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white shadow-lg">
-          <ul className="flex flex-col items-center py-4 space-y-4 text-gray-700 font-medium">
+        <div className="md:hidden bg-white shadow-lg border-t">
+          <ul className="flex flex-col items-center py-6 space-y-5 text-gray-700 font-medium">
 
             <li>
               <a
                 href="#home"
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-blue-600"
+                className="hover:text-blue-600 transition"
               >
                 Home
               </a>
@@ -61,7 +96,7 @@ function Navbar() {
               <a
                 href="#about"
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-blue-600"
+                className="hover:text-blue-600 transition"
               >
                 About
               </a>
@@ -71,7 +106,7 @@ function Navbar() {
               <a
                 href="#skills"
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-blue-600"
+                className="hover:text-blue-600 transition"
               >
                 Skills
               </a>
@@ -81,7 +116,7 @@ function Navbar() {
               <a
                 href="#projects"
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-blue-600"
+                className="hover:text-blue-600 transition"
               >
                 Projects
               </a>
@@ -91,7 +126,7 @@ function Navbar() {
               <a
                 href="#experience"
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-blue-600"
+                className="hover:text-blue-600 transition"
               >
                 Experience
               </a>
@@ -101,16 +136,21 @@ function Navbar() {
               <a
                 href="#contact"
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-blue-600"
+                className="hover:text-blue-600 transition"
               >
                 Contact
               </a>
             </li>
 
+            {/* Mobile Login Button */}
             <li>
-              <button className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">
+              <Link
+                to="/login"
+                onClick={() => setMenuOpen(false)}
+                className="block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+              >
                 Login
-              </button>
+              </Link>
             </li>
 
           </ul>

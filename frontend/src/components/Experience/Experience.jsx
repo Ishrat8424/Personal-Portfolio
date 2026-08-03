@@ -20,7 +20,7 @@ function Experience() {
   return (
     <section
       id="experience"
-      className="py-20 bg-gradient-to-b from-gray-100 to-white"
+      className="py-20 bg-gradient-to-b from-gray-100 to-white scroll-mt-24"
     >
       <div className="max-w-6xl mx-auto px-6">
 

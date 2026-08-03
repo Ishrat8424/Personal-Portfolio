@@ -1,7 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 import Loader from "./components/Loader";
+import ScrollTop from "./components/ScrollTop";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -16,15 +20,27 @@ import DashboardHome from "./pages/Dashboard/Home";
 import Skills from "./pages/Dashboard/Skills";
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
- useEffect(() => {
-  const timer = setTimeout(() => {
-    setLoading(false);
-  }, 7000);
+  // Loader (Enable if needed)
+  /*
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 8000);
 
-  return () => clearTimeout(timer);
-}, []);
+    return () => clearTimeout(timer);
+  }, []);
+  */
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: true,
+      offset: 100,
+    });
+  }, []);
 
   if (loading) {
     return <Loader />;
@@ -32,6 +48,8 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollTop />
+
       <Routes>
         {/* Public */}
         <Route path="/" element={<Home />} />

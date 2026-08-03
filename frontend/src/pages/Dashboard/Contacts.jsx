@@ -116,30 +116,30 @@ function Contacts() {
                 {item.message}
               </p>
 
-              <div className="flex gap-5">
-                {!item.isRead && (
-                  <button
-                    onClick={() => handleMarkAsRead(item._id)}
-                    className="text-green-500 hover:text-green-400 transition"
-                  >
-                    ✓ Mark as Read
-                  </button>
-                )}
+              <div className="flex gap-3 mt-4">
+  {!item.isRead && (
+    <button
+      onClick={() => handleMarkAsRead(item._id)}
+      className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white transition-all duration-300"
+    >
+      ✓ Mark as Read
+    </button>
+  )}
 
-                <a
-                  href={`mailto:${item.email}?subject=Reply from Ishrat Jahan&body=Hello ${item.name},`}
-                  className="text-blue-500 hover:text-blue-400 transition"
-                >
-                  📧 Reply
-                </a>
+  <a
+    href={`mailto:${item.email}?subject=Reply from Ishrat Jahan&body=Hello ${item.name},`}
+    className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 inline-flex items-center"
+  >
+    📧 Reply
+  </a>
 
-                <button
-                  onClick={() => handleDelete(item._id)}
-                  className="text-red-500 hover:text-red-400 transition"
-                >
-                  🗑 Delete
-                </button>
-              </div>
+  <button
+    onClick={() => handleDelete(item._id)}
+    className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition-all duration-300"
+  >
+    🗑 Delete
+  </button>
+</div>
             </div>
           ))}
         </div>

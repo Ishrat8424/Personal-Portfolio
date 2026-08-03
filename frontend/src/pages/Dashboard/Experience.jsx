@@ -189,17 +189,17 @@ const handleSubmit = async (e) => {
 
             <p>{item.description}</p>
 
-<div className="flex gap-4 mt-3">
+<div className="flex gap-3 mt-4">
   <button
     onClick={() => handleEdit(item)}
-    className="text-yellow-600 hover:underline"
+    className="px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white transition-all duration-300"
   >
     Edit
   </button>
 
   <button
     onClick={() => handleDelete(item._id)}
-    className="text-red-600 hover:underline"
+    className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition-all duration-300"
   >
     Delete
   </button>

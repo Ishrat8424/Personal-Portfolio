@@ -33,7 +33,7 @@ function Footer() {
   };
 
   return (
-    <footer className="bg-slate-900 text-white">
+    <footer className="bg-slate-900 text-white scroll-mt-24">
 
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-6 py-14">

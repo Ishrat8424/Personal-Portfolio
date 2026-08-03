@@ -29,23 +29,43 @@ function Loader() {
     }, words.length * 600 + 800);
   }, []);
 
-  // Typing animation
-  useEffect(() => {
-    if (!showName) return;
+  // Typing + Erasing Animation
+useEffect(() => {
+  if (!showName) return;
 
-    let i = 0;
+  let index = 0;
+  let deleting = false;
 
-    const typing = setInterval(() => {
-      setTypedName(fullName.slice(0, i + 1));
-      i++;
+  const interval = setInterval(() => {
+    if (!deleting) {
+      // Typing
+      setTypedName(fullName.slice(0, index + 1));
+      index++;
 
-      if (i === fullName.length) {
-        clearInterval(typing);
+      if (index === fullName.length) {
+        deleting = true;
+
+        // Pause before erasing
+        clearInterval(interval);
+
+        setTimeout(() => {
+          let deleteIndex = fullName.length;
+
+          const eraseInterval = setInterval(() => {
+            deleteIndex--;
+            setTypedName(fullName.slice(0, deleteIndex));
+
+            if (deleteIndex === 0) {
+              clearInterval(eraseInterval);
+            }
+          }, 100); // Erasing speed
+        }, 1000); // Wait 1.5 seconds after typing
       }
-    }, 120);
+    }
+  }, 120);
 
-    return () => clearInterval(typing);
-  }, [showName]);
+  return () => clearInterval(interval);
+}, [showName]);
 
   return (
     <div className="loader">

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPortfolio } from "../../services/portfolioService";
 
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 function Hero() {
   const [portfolio, setPortfolio] = useState(null);
 
@@ -17,111 +16,118 @@ function Hero() {
 
     fetchPortfolio();
   }, []);
-const handleDownloadResume = async () => {
-  try {
-    const response = await fetch(portfolio.resume);
 
-    if (!response.ok) {
-      throw new Error("Failed to download resume");
+  const handleDownloadResume = async () => {
+    try {
+      const response = await fetch(portfolio.resume);
+
+      if (!response.ok) {
+        throw new Error("Failed to download resume");
+      }
+
+      const blob = await response.blob();
+
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "Ishrat_Jahan_Khazi_Resume.pdf";
+
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error(error);
+      alert("Unable to download resume.");
     }
+  };
 
-    const blob = await response.blob();
-
-    const blobUrl = window.URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = blobUrl;
-    link.download = "Ishrat_Jahan_Khazi_Resume.pdf";
-
-    document.body.appendChild(link);
-    link.click();
-
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(blobUrl);
-  } catch (error) {
-    console.error(error);
-    alert("Unable to download resume.");
-  }
-};
   if (!portfolio) return null;
 
- return (
- <section
-  id="home"
-  className="relative overflow-hidden min-h-screen flex items-center justify-center pt-24"
->
-  
-  <div className="absolute inset-0 overflow-hidden -z-10">
-  <div className="blob w-96 h-96 bg-blue-500 top-10 left-10"></div>
+  return (
+    <section
+      id="home"
+      className="relative overflow-hidden min-h-screen flex items-center justify-center pt-24 scroll-mt-24"
+    >
+      {/* Background Blobs */}
+      <div className="absolute inset-0 overflow-hidden -z-10">
+        <div className="blob w-96 h-96 bg-blue-500 top-10 left-10"></div>
 
-  <div className="blob w-[450px] h-[450px] bg-cyan-400 bottom-0 right-0"></div>
+        <div className="blob w-[450px]h-[450px] bg-cyan-400 bottom-0 right-0"></div>
 
-  <div className="blob w-80 h-80 bg-indigo-400 top-1/2 left-1/2"></div>
+        <div className="blob w-80 h-80 bg-indigo-400 top-1/2 left-1/2"></div>
 
-  <div className="blob w-72 h-72 bg-purple-400 bottom-10 left-20"></div>
-</div>
-    <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
+        <div className="blob w-72 h-72 bg-purple-400 bottom-10 left-20"></div>
+      </div>
 
-      {/* Left Side */}
-      <div className="flex-1 text-center lg:text-left">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-16">
 
-        <p className="text-lg md:text-xl text-gray-600">
-          Hello, I'm
-        </p>
+        {/* Left Side */}
+        <div className="flex-1 text-center lg:text-left">
 
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-3">
-          {portfolio.fullName}
-        </h1>
+          <p className="text-lg md:text-xl text-gray-600">
+            Hello, I'm
+          </p>
 
-        <h2 className="text-2xl sm:text-3xl text-blue-600 font-semibold mt-4">
-          {portfolio.title}
-        </h2>
+          <h1 className="text-5xl lg:text-6xl font-bold mt-3">
+            {portfolio.fullName}
+          </h1>
 
-        <p className="mt-6 text-gray-600 max-w-xl mx-auto lg:mx-0">
-          {portfolio.heroDescription}
-        </p>
+          <h2 className="text-2xl lg:text-3xl text-blue-600 font-semibold mt-4">
+            {portfolio.title}
+          </h2>
 
-        <div className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+          <p className="mt-6 text-gray-600 leading-8 max-w-xl mx-auto lg:mx-0">
+            {portfolio.heroDescription}
+          </p>
 
-          <button
-            onClick={() => {
-              document
-                .getElementById("projects")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-          >
-            View Projects
-          </button>
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
 
-          <button
-            onClick={handleDownloadResume}
-            className="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-600 hover:text-white transition"
-          >
-            Download Resume
-          </button>
+            <button
+              onClick={() =>
+                document
+                  .getElementById("projects")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-xl shadow-lg transition"
+            >
+              View Projects
+            </button>
+
+            <button
+              onClick={handleDownloadResume}
+              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-7 py-3 rounded-xl transition"
+            >
+              Download Resume
+            </button>
+
+          </div>
 
         </div>
 
+    {/* Right Side */}
+<div className="flex-1 flex justify-center">
+
+  <img
+    src={
+      portfolio.profileImage ||
+      "https://via.placeholder.com/500"
+    }
+    alt={portfolio.fullName}
+    className="animate-float w-[420px] h-[500px] object-cover shadow-2xl"
+    style={{
+      borderRadius: "42% 58% 56% 44% / 40% 42% 58% 60%",
+    }}
+  />
+
+</div>
+
       </div>
-
-      {/* Right Side */}
-      <div className="flex-1 flex justify-center">
-
-        <img
-          src={
-            portfolio.profileImage ||
-            "https://via.placeholder.com/300"
-          }
-          alt={portfolio.fullName}
-          className="w-60 h-60 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full object-cover border-8 border-white shadow-2xl"
-        />
-
-      </div>
-
-    </div>
-  </section>
-);
+    </section>
+  );
 }
 
 export default Hero;

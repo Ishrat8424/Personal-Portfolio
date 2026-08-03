@@ -21,9 +21,10 @@ function About() {
   if (!portfolio) return null;
 
   return (
+    
     <section
       id="about"
-      className="py-20 bg-white"
+      className="py-20 bg-white scroll-mt-24"
     >
       <div className="max-w-5xl mx-auto px-6">
 

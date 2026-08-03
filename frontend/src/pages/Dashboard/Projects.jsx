@@ -263,30 +263,30 @@ function Projects() {
 
             <p className="text-blue-600">{item.technologies.join(", ")}</p>
 
-            <div className="flex gap-4 mt-3">
-              <a
-                href={item.github}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 hover:underline"
-              >
-                GitHub
-              </a>
+           <div className="flex flex-wrap gap-3 mt-4">
+  <a
+    href={item.github}
+    target="_blank"
+    rel="noreferrer"
+    className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 shadow-md"
+  >
+    🔗 GitHub
+  </a>
 
-              <button
-                onClick={() => handleEdit(item)}
-                className="text-yellow-600 hover:underline"
-              >
-                Edit
-              </button>
+  <button
+    onClick={() => handleEdit(item)}
+    className="px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white transition-all duration-300 shadow-md"
+  >
+    Edit
+  </button>
 
-              <button
-                onClick={() => handleDelete(item._id)}
-                className="text-red-600 hover:underline"
-              >
-                Delete
-              </button>
-            </div>
+  <button
+    onClick={() => handleDelete(item._id)}
+    className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition-all duration-300 shadow-md"
+  >
+    Delete
+  </button>
+</div>
           </div>
         ))}
       </div>

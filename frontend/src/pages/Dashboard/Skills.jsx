@@ -20,7 +20,7 @@ function Skills() {
 
   const [skills, setSkills] = useState([]);
   const [editingId, setEditingId] = useState(null);
-const { darkMode } = useOutletContext();
+  const { darkMode } = useOutletContext();
 
   const fetchSkills = async () => {
     try {
@@ -103,90 +103,88 @@ const { darkMode } = useOutletContext();
       <h1 className="text-3xl font-bold mb-6">Skills Management</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-       <Select
-  options={skillOptions}
-  placeholder="Search and Select Skill..."
-  value={skillOptions.find(
-    (option) => option.value === skill.name
-  )}
-  onChange={(selectedOption) =>
-    setSkill({
-      ...skill,
-      name: selectedOption.value,
-      category: selectedOption.category,
-    })
-  }
-  isSearchable
- styles={{
-  control: (base) => ({
-    ...base,
-    backgroundColor: darkMode ? "#1f2937" : "#ffffff",
-    borderColor: darkMode ? "#374151" : "#d1d5db",
-    color: darkMode ? "#ffffff" : "#000000",
-    boxShadow: "none",
-    "&:hover": {
-      borderColor: "#2563eb",
-    },
-  }),
+        <Select
+          options={skillOptions}
+          placeholder="Search and Select Skill..."
+          value={skillOptions.find((option) => option.value === skill.name)}
+          onChange={(selectedOption) =>
+            setSkill({
+              ...skill,
+              name: selectedOption.value,
+              category: selectedOption.category,
+            })
+          }
+          isSearchable
+          styles={{
+            control: (base) => ({
+              ...base,
+              backgroundColor: darkMode ? "#1f2937" : "#ffffff",
+              borderColor: darkMode ? "#374151" : "#d1d5db",
+              color: darkMode ? "#ffffff" : "#000000",
+              boxShadow: "none",
+              "&:hover": {
+                borderColor: "#2563eb",
+              },
+            }),
 
-  menu: (base) => ({
-    ...base,
-    backgroundColor: darkMode ? "#1f2937" : "#ffffff",
-  }),
+            menu: (base) => ({
+              ...base,
+              backgroundColor: darkMode ? "#1f2937" : "#ffffff",
+            }),
 
-  option: (base, state) => ({
-    ...base,
-    backgroundColor: state.isFocused
-      ? "#2563eb"
-      : darkMode
-      ? "#1f2937"
-      : "#ffffff",
-    color: darkMode ? "#ffffff" : "#000000",
-    cursor: "pointer",
-  }),
+            option: (base, state) => ({
+              ...base,
+              backgroundColor: state.isFocused
+                ? "#2563eb"
+                : darkMode
+                  ? "#1f2937"
+                  : "#ffffff",
+              color: darkMode ? "#ffffff" : "#000000",
+              cursor: "pointer",
+            }),
 
-  singleValue: (base) => ({
-    ...base,
-    color: darkMode ? "#ffffff" : "#000000",
-  }),
+            singleValue: (base) => ({
+              ...base,
+              color: darkMode ? "#ffffff" : "#000000",
+            }),
 
-  input: (base) => ({
-    ...base,
-    color: darkMode ? "#ffffff" : "#000000",
-  }),
+            input: (base) => ({
+              ...base,
+              color: darkMode ? "#ffffff" : "#000000",
+            }),
 
-  placeholder: (base) => ({
-    ...base,
-    color: darkMode ? "#9ca3af" : "#6b7280",
-  }),
+            placeholder: (base) => ({
+              ...base,
+              color: darkMode ? "#9ca3af" : "#6b7280",
+            }),
 
-  menuList: (base) => ({
-    ...base,
-    maxHeight: 250,
-  }),
+            menuList: (base) => ({
+              ...base,
+              maxHeight: 250,
+            }),
 
-  dropdownIndicator: (base) => ({
-    ...base,
-    color: darkMode ? "#ffffff" : "#000000",
-  }),
+            dropdownIndicator: (base) => ({
+              ...base,
+              color: darkMode ? "#ffffff" : "#000000",
+            }),
 
-  indicatorSeparator: (base) => ({
-    ...base,
-    backgroundColor: darkMode ? "#4b5563" : "#d1d5db",
-  }),
-}}
-/>
+            indicatorSeparator: (base) => ({
+              ...base,
+              backgroundColor: darkMode ? "#4b5563" : "#d1d5db",
+            }),
+          }}
+        />
 
-       <input
-  type="text"
-  value={skill.category}
-  className={`w-full border p-3 rounded transition-colors duration-300 ${
-    darkMode
-      ? "bg-gray-800 text-white border-gray-700"
-      : "bg-gray-100 text-black border-gray-300"
-  }`}
-  readOnly
-/>
+        <input
+          type="text"
+          value={skill.category}
+          className={`w-full border p-3 rounded transition-colors duration-300 ${
+            darkMode
+              ? "bg-gray-800 text-white border-gray-700"
+              : "bg-gray-100 text-black border-gray-300"
+          }`}
+          readOnly
+        />
 
         <div>
           <div className="flex justify-between mb-2">
@@ -223,26 +221,37 @@ const { darkMode } = useOutletContext();
 
       <div className="space-y-4">
         {skills.map((item) => (
-          <div key={item._id} className="border rounded-lg p-4 shadow">
+          <div
+            key={item._id}
+            className={`border rounded-lg p-4 shadow-lg transition-all duration-300 ${
+              darkMode
+                ? "bg-gray-800 border-gray-700 text-white"
+                : "bg-white border-gray-300 text-black"
+            }`}
+          >
             <h3 className="text-xl font-bold">{item.name}</h3>
 
-            <p>{item.category}</p>
+            <p className={darkMode ? "text-gray-300" : "text-gray-600"}>
+              {item.category}
+            </p>
 
-            <p>{item.percentage}%</p>
+            <p className="text-blue-600 font-semibold mt-1">
+              {item.percentage}%
+            </p>
 
-            <div className="flex gap-4 mt-3">
+            <div className="flex gap-3 mt-4">
               <button
                 onClick={() => handleEdit(item)}
-                className="text-yellow-600 hover:underline"
+                className="px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white transition-all duration-300 shadow-md"
               >
-                Edit
+              Edit
               </button>
 
               <button
                 onClick={() => handleDelete(item._id)}
-                className="text-red-600 hover:underline"
+                className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition-all duration-300 shadow-md"
               >
-                Delete
+               Delete
               </button>
             </div>
           </div>
