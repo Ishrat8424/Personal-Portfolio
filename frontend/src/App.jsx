@@ -22,8 +22,8 @@ import Skills from "./pages/Dashboard/Skills";
 function App() {
   const [loading, setLoading] = useState(false);
 
-  // Loader (Enable if needed)
-  /*
+//  Loader (Enable if needed)
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -31,7 +31,7 @@ function App() {
 
     return () => clearTimeout(timer);
   }, []);
-  */
+  
 
   useEffect(() => {
     AOS.init({
