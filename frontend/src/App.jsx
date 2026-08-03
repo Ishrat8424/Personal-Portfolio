@@ -20,17 +20,17 @@ import DashboardHome from "./pages/Dashboard/Home";
 import Skills from "./pages/Dashboard/Skills";
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
 //  Loader (Enable if needed)
   
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 8000);
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setLoading(false);
+  }, 8000);
 
-    return () => clearTimeout(timer);
-  }, []);
+  return () => clearTimeout(timer);
+}, []);
   
 
   useEffect(() => {
