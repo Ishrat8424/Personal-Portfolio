@@ -22,26 +22,35 @@ import Skills from "./pages/Dashboard/Skills";
 function App() {
   const [loading, setLoading] = useState(true);
 
-//  Loader (Enable if needed)
-  
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setLoading(false);
-  }, 8000);
+  // Loader
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 8000);
 
-  return () => clearTimeout(timer);
-}, []);
-  
+    return () => clearTimeout(timer);
+  }, []);
 
-useEffect(() => {
-  AOS.init({
-    duration: 8000,
-    easing: "ease-in-out",
-    once: false,
-    offset: 0,
-    disable: "mobile",
-  });
-}, []);
+  // AOS
+  useEffect(() => {
+    AOS.init({
+      duration: 8000,
+      easing: "ease-in-out",
+      once: true,
+      offset: 50,
+      disable: "mobile",
+    });
+
+    window.addEventListener("load", () => {
+      AOS.refresh();
+    });
+
+    return () => {
+      window.removeEventListener("load", () => {
+        AOS.refresh();
+      });
+    };
+  }, []);
 
   if (loading) {
     return <Loader />;
@@ -52,11 +61,12 @@ useEffect(() => {
       <ScrollTop />
 
       <Routes>
+
         {/* Public */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
 
-        {/* Admin Dashboard */}
+        {/* Dashboard */}
         <Route
           path="/dashboard"
           element={
@@ -72,6 +82,7 @@ useEffect(() => {
           <Route path="experience" element={<Experience />} />
           <Route path="contacts" element={<Contacts />} />
         </Route>
+
       </Routes>
     </BrowserRouter>
   );
