@@ -69,7 +69,7 @@ function Contact() {
     <section
       id="contact"
       className="py-20 bg-gradient-to-b from-gray-100 to-white scroll-mt-24"
-      data-aos="fade-up"
+      
     >
       <div className="max-w-7xl mx-auto px-6">
 
