@@ -33,14 +33,15 @@ useEffect(() => {
 }, []);
   
 
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      easing: "ease-in-out",
-      once: true,
-      offset: 100,
-    });
-  }, []);
+useEffect(() => {
+  AOS.init({
+    duration: 1000,
+    easing: "ease-in-out",
+    once: false,
+    offset: 0,
+    disable: "mobile",
+  });
+}, []);
 
   if (loading) {
     return <Loader />;
