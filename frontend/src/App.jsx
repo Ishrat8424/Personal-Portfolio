@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 8050);
+    }, 1200);
 
     return () => clearTimeout(timer);
   }, []);
@@ -34,7 +34,7 @@ function App() {
   // AOS
   useEffect(() => {
     AOS.init({
-      duration: 8050,
+      duration: 800,
       easing: "ease-in-out",
       once: true,
       offset: 50,

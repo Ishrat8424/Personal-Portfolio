@@ -1,14 +1,12 @@
-import axios from "axios";
-
-const API = "http://localhost:5000/api/upload";
+import API from "./api";
 
 export const uploadImage = async (file) => {
   const formData = new FormData();
 
   formData.append("image", file);
 
-  const response = await axios.post(
-    `${API}/image`,
+  const response = await API.post(
+    "/upload/image",
     formData
   );
 
@@ -20,8 +18,8 @@ export const uploadResume = async (file) => {
 
   formData.append("resume", file);
 
-  const response = await axios.post(
-    `${API}/resume`,
+  const response = await API.post(
+    "/upload/resume",
     formData
   );
 
