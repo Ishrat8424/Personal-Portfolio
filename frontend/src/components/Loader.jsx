@@ -20,13 +20,13 @@ function Loader() {
     words.forEach((word, index) => {
       setTimeout(() => {
         setVisibleWords((prev) => [...prev, word]);
-      }, index * 600);
+      }, index * 400);
     });
 
     // After welcome animation
     setTimeout(() => {
       setShowName(true);
-    }, words.length * 600 + 800);
+    }, words.length * 400 + 400);
   }, []);
 
   // Typing + Erasing Animation
@@ -58,11 +58,11 @@ useEffect(() => {
             if (deleteIndex === 0) {
               clearInterval(eraseInterval);
             }
-          }, 100); // Erasing speed
-        }, 1000); // Wait 1.5 seconds after typing
+          }, 70); // Erasing speed
+        }, 500); // Pause before erasing
       }
     }
-  }, 120);
+  }, 80);
 
   return () => clearInterval(interval);
 }, [showName]);
