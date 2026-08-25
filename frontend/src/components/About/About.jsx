@@ -18,8 +18,6 @@ function About() {
     fetchPortfolio();
   }, []);
 
-  if (!portfolio) return null;
-
   return (
     
     <section
@@ -33,7 +31,7 @@ function About() {
         </h2>
 
         <p className="text-gray-700 text-lg leading-8 text-center">
-          {portfolio.about}
+          {portfolio?.about || "About information is currently unavailable."}
         </p>
 
       </div>

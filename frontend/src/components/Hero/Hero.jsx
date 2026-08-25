@@ -19,6 +19,10 @@ function Hero() {
 
   const handleDownloadResume = async () => {
     try {
+      if (!portfolio?.resume) {
+        throw new Error("Resume is unavailable");
+      }
+
       const response = await fetch(portfolio.resume);
 
       if (!response.ok) {
@@ -45,8 +49,6 @@ function Hero() {
     }
   };
 
-  if (!portfolio) return null;
-
   return (
     <section
       id="home"
@@ -63,7 +65,7 @@ function Hero() {
         <div className="blob w-72 h-72 bg-purple-400 bottom-10 left-20"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-16">
+      <div className="w-full max-w-7xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16">
 
         {/* Left Side */}
         <div className="flex-1 text-center lg:text-left">
@@ -72,16 +74,16 @@ function Hero() {
             Hello, I'm
           </p>
 
-          <h1 className="text-5xl lg:text-6xl font-bold mt-3">
-            {portfolio.fullName}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-3 break-words">
+            {portfolio?.fullName || "Your Name"}
           </h1>
 
           <h2 className="text-2xl lg:text-3xl text-blue-600 font-semibold mt-4">
-            {portfolio.title}
+            {portfolio?.title || "Developer"}
           </h2>
 
           <p className="mt-6 text-gray-600 leading-8 max-w-xl mx-auto lg:mx-0">
-            {portfolio.heroDescription}
+            {portfolio?.heroDescription || "Welcome to my portfolio."}
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -113,11 +115,11 @@ function Hero() {
 
   <img
     src={
-      portfolio.profileImage ||
+      portfolio?.profileImage ||
       "https://via.placeholder.com/500"
     }
-    alt={portfolio.fullName}
-    className="animate-float w-[420px] h-[500px] object-cover shadow-2xl"
+    alt={portfolio?.fullName || "Profile"}
+    className="animate-float w-full max-w-[420px] h-auto aspect-[5/6] object-cover shadow-2xl"
     style={{
       borderRadius: "42% 58% 56% 44% / 40% 42% 58% 60%",
     }}

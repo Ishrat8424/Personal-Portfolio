@@ -63,8 +63,6 @@ function Contact() {
     }
   };
 
-  if (!portfolio) return null;
-
   return (
     <section
       id="contact"
@@ -104,10 +102,10 @@ function Contact() {
                   <h4 className="font-semibold">Email</h4>
 
                   <a
-                    href={`mailto:${portfolio.email}`}
+                    href={`mailto:${portfolio?.email || ""}`}
                     className="text-gray-600 hover:text-blue-600"
                   >
-                    {portfolio.email}
+                    {portfolio?.email || "Email unavailable"}
                   </a>
                 </div>
 
@@ -124,10 +122,10 @@ function Contact() {
                   <h4 className="font-semibold">Phone</h4>
 
                   <a
-                    href={`tel:${portfolio.phone}`}
+                    href={`tel:${portfolio?.phone || ""}`}
                     className="text-gray-600 hover:text-green-600"
                   >
-                    {portfolio.phone}
+                    {portfolio?.phone || "Phone unavailable"}
                   </a>
                 </div>
 
@@ -144,7 +142,7 @@ function Contact() {
                   <h4 className="font-semibold">Location</h4>
 
                   <p className="text-gray-600">
-                    {portfolio.location}
+                    {portfolio?.location || "Location unavailable"}
                   </p>
                 </div>
 
@@ -161,7 +159,7 @@ function Contact() {
 
               <div className="flex gap-5">
 
-                {portfolio.github && (
+                {portfolio?.github && (
                   <a
                     href={portfolio.github}
                     target="_blank"
@@ -172,7 +170,7 @@ function Contact() {
                   </a>
                 )}
 
-                {portfolio.linkedin && (
+                {portfolio?.linkedin && (
                   <a
                     href={portfolio.linkedin}
                     target="_blank"
@@ -188,7 +186,7 @@ function Contact() {
             </div>
 
             {/* Google Maps */}
-            {portfolio.location && (
+            {portfolio?.location && (
               <div className="mt-10 rounded-xl overflow-hidden shadow">
 
                 <iframe
