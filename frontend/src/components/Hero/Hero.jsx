@@ -49,6 +49,9 @@ function Hero() {
     }
   };
 
+  const nameParts = (portfolio?.fullName || "Your Name").trim().split(/\s+/);
+  const lastName = nameParts.pop();
+
   return (
     <section
       id="home"
@@ -75,7 +78,9 @@ function Hero() {
           </p>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-3 break-words">
-            {portfolio?.fullName || "Your Name"}
+            {nameParts.join(" ")}
+            <br />
+            {lastName}
           </h1>
 
           <h2 className="text-2xl lg:text-3xl text-blue-600 font-semibold mt-4">
